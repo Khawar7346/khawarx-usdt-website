@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Khawar Flasher</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00ffcc;
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .logo-bg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -2;
+      opacity: 0.05;
+      width: 600px;
+      height: 600px;
+      background: url('https://cryptologos.cc/logos/tether-usdt-logo.png') no-repeat center;
+      background-size: contain;
+      filter: drop-shadow(0 0 100px #00ffcc);
+    }
+
+    .container {
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3.5em;
+      text-shadow: 0 0 10px #00fff0, 0 0 30px #00fff0;
+      color: #00ffcc;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #aaffee;
+    }
+
+    .btn {
+      padding: 15px 40px;
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2em;
+      text-decoration: none;
+      margin: 10px;
+      box-shadow: 0 0 20px #00ffcc;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00aa88;
+      box-shadow: 0 0 40px #00ffcc;
+    }
+
+    #balance {
+      font-size: 1.6em;
+      margin-top: 30px;
+      color: white;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="logo-bg"></div>
+
+<div class="container">
+  <h1>Khawar Flasher</h1>
+  <p>Secure Stable Flash System</p>
+
+  <button class="btn" onclick="connectWallet()">Connect Wallet</button>
+  <a class="btn" href="https://etherscan.io/address/0xYourContractAddressHere" target="_blank">View Smart Contract</a>
+
+  <div id="balance"></div>
+</div>
+
+<div class="footer">
+  &copy; 2025 Khawar Flasher Labs
+</div>
+
+<script>
+  // Matrix hacker effect
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  const letters = "01";
+  const fontSize = 14;
+  const columns = canvas.width / fontSize;
+  const drops = Array.from({length: columns}).fill(1);
+  function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ffcc";
+    ctx.font = fontSize + "px monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  setInterval(draw, 33);
+
+  // Wallet Connection
+  async function connectWallet() {
+    if (window.ethereum) {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const userAddress = accounts[0];
+      document.getElementById('balance').innerHTML = `Balance: <b>10,000 Khawar Stable USDT</b> (~$10,000)`;
+    } else {
+      alert('Please install MetaMask or TrustWallet!');
+    }
+  }
+</script>
+
+</body>
+</html>
